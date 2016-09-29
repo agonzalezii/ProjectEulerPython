@@ -1,60 +1,41 @@
-from utils import find_prime_factorization
-fractions = []
-
-for num in range(10, 100):
-	for den in range(num, 100):
-		num_tens = int(num/10)
-		num_ones = num % 10
-
-		den_tens = int(den/10)
-		den_ones = den % 10
-
-		if(den_ones == 0):
-			continue
-		if(num_ones != den_tens):
-			continue
-		if(num_ones == den_ones):
-			continue
-
-		if(num/den == num_tens/den_ones):
-			fractions.append((num, den))
-
-#find product of fractions in lowest common terms
-new_num = 1
-new_den = 1
-
-for n,d in fractions:
-	new_num *= n
-	new_den *= d
-
-num_prime_factorization = find_prime_factorization(new_num)
-den_prime_factorization = find_prime_factorization(new_den)
-
-to_remove = []
-
-for i in num_prime_factorization:
-	if i in den_prime_factorization:
-		den_prime_factorization.remove(i)
-		to_remove.append(i)
-for i in to_remove:
-	num_prime_factorization.remove(i)
-
-n = 1
-for i in num_prime_factorization:
-	n *= i
-d = 1
-for i in den_prime_factorization:
-	d*=i
-
-print(n,d)
+from utils import add_or_increment
+def same_digits(a, b):
+	digits_of_a = {}
+	digits_of_b = {}
+	s_a = str(a)
+	s_b = str(b)
+	if(len(s_a) != len(s_b)):
+		return False
+	for c in s_a:
+		add_or_increment(digits_of_a, c)
+	for c in s_b:
+		add_or_increment(digits_of_b, c)
+	if(len(digits_of_a) != len(digits_of_b)):
+		return False
+	for k_a in digits_of_a:
+		if k_a not in digits_of_b:
+			return False
+		if digits_of_a[k_a] != digits_of_b[k_a]:
+			return False
+	return True
 
 
+def all_same_to_n(a,n):
+	for i in range(1,n):
+		if(not same_digits(a, a * (i+1))):
+			return False
+	return True
 
 
+print(all_same_to_n(125874, 2))
 
+limit = 1000000
+n = 6
+not_found = True
 
-
-
+for i in range(1,limit):
+	if(all_same_to_n(i, n)):
+		print(i)
 
 
 
