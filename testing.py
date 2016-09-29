@@ -1,48 +1,25 @@
-from utils import add_or_increment
-def same_digits(a, b):
-	digits_of_a = {}
-	digits_of_b = {}
-	s_a = str(a)
-	s_b = str(b)
-	if(len(s_a) != len(s_b)):
-		return False
-	for c in s_a:
-		add_or_increment(digits_of_a, c)
-	for c in s_b:
-		add_or_increment(digits_of_b, c)
-	if(len(digits_of_a) != len(digits_of_b)):
-		return False
-	for k_a in digits_of_a:
-		if k_a not in digits_of_b:
+from utils import is_palindrome
+
+limit = 10000
+try_limit = 50
+i = 1
+
+def get_reverse(number):
+	return int(str(number)[::-1])
+
+def is_lychrel(number):
+	tries = 0
+	active = number
+	while tries< try_limit:
+		active_reverse = get_reverse(active)
+		sum_with_reverse = active_reverse + active
+		if(is_palindrome(sum_with_reverse)):
 			return False
-		if digits_of_a[k_a] != digits_of_b[k_a]:
-			return False
+		tries += 1
+		active = sum_with_reverse
 	return True
 
-
-def all_same_to_n(a,n):
-	for i in range(1,n):
-		if(not same_digits(a, a * (i+1))):
-			return False
-	return True
-
-
-print(all_same_to_n(125874, 2))
-
-limit = 1000000
-n = 6
-not_found = True
-
-for i in range(1,limit):
-	if(all_same_to_n(i, n)):
-		print(i)
-
-
-
-
-
-
-
+print(sum([is_lychrel(i) for i in range(limit)]))
 
 
 
