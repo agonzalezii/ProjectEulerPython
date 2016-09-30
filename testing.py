@@ -1,25 +1,46 @@
-from utils import is_palindrome
+currency = [1,2,5,10,20,50,100,200]
 
-limit = 10000
-try_limit = 50
-i = 1
+def find_subsets(goal, coins):
+	if(goal == 0):
+		return 0
 
-def get_reverse(number):
-	return int(str(number)[::-1])
+	subset_count = 0
+	currency_declining = sorted(set(coins), reverse=True)
+	for i in range(len(coins)):
+		if(coins[i] > goal):
+			continue
+		elif(coins[i] == goal):
+			subset_count += 1
+		else:
+			subset_count += find_subsets(goal-coins[i],coins[i:])
+	return subset_count
 
-def is_lychrel(number):
-	tries = 0
-	active = number
-	while tries< try_limit:
-		active_reverse = get_reverse(active)
-		sum_with_reverse = active_reverse + active
-		if(is_palindrome(sum_with_reverse)):
-			return False
-		tries += 1
-		active = sum_with_reverse
-	return True
 
-print(sum([is_lychrel(i) for i in range(limit)]))
+
+x = find_subsets(200, currency)
+print(x)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
