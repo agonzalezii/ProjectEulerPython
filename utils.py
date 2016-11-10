@@ -82,3 +82,27 @@ def add_or_increment(dic, v):
 		dic[v] += 1
 	else:
 		dic[v] = 1
+
+def solve_quadratic_for_max_n(a,b,c):
+	inner = b**2 - (4*a*c)
+	if inner < 0:
+		return None #throw
+	s = math.sqrt(inner)
+	return max((-b-s)/(2*a),(-b+s)/(2*a))
+
+def is_unique(value):
+	string_value = str(value)
+	hash_set = set([x for x in string_value])
+
+	return len(string_value) == len(hash_set)
+
+def is_pandigital(value, start, end):
+	string_value = str(value)
+	if(len(string_value) != end - start + 1):
+		return False
+
+	for i in range(start, end+1):
+		if(str(i) not in string_value):
+			return False
+	return True
+
